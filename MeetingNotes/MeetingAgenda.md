@@ -51,3 +51,32 @@ Application Feature List
 Workflow Matters
 
 1. GitHub
+
+
+
+To push commit into github
+
+- Note that `git add .` means that you are adding every files that you changed in the working directory, to specify use `git add [filepath]`
+
+```
+git init
+git add .
+git commit -m "[message]"
+git push
+```
+
+
+
+To pull changes from the working version of the project use the following commands
+
+```
+git pull [project_url]
+// make changes //
+git init
+git add .
+git commit -m "[message]"
+git push
+```
+
+
+
