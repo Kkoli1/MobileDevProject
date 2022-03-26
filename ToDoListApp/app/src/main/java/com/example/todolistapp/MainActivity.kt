@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.*
+import android.content.Intent
 
 class MainActivity : AppCompatActivity() ,UpdateAndDelete{
     lateinit var database: DatabaseReference
@@ -25,26 +26,31 @@ class MainActivity : AppCompatActivity() ,UpdateAndDelete{
 
         database=FirebaseDatabase.getInstance().reference
 
+
         fab.setOnClickListener { view ->
-            val alertDialog = AlertDialog.Builder(this)
-            val textEditText = EditText(this)
-            alertDialog.setMessage("Add TODO item")
-            alertDialog.setTitle("Enter To Do item")
-            alertDialog.setView(textEditText)
-            alertDialog.setPositiveButton("Add"){dialog, i ->
-                val todoItemData = ToDoModel.createList()
-                todoItemData.itemDataText=textEditText.text.toString()
-                todoItemData.done=false
+//            val alertDialog = AlertDialog.Builder(this)
+//            val textEditText = EditText(this)
+//            alertDialog.setMessage("Add TODO item")
+//            alertDialog.setTitle("Enter To Do item")
+//            alertDialog.setView(textEditText)
+//            alertDialog.setPositiveButton("Add"){dialog, i ->
+//                val todoItemData = ToDoModel.createList()
+//                todoItemData.itemDataText=textEditText.text.toString()
+//                todoItemData.done=false
+//
+//                val newItemData = database.child("todo").push()
+//                todoItemData.UID = newItemData.key
+//
+//                newItemData.setValue(todoItemData)
+//
+//                dialog.dismiss()
+//                Toast.makeText(this, "item saved", Toast.LENGTH_LONG).show()
+//            }
+//            alertDialog.show()
 
-                val newItemData = database.child("todo").push()
-                todoItemData.UID = newItemData.key
+            val intent = Intent(this, AddTask::class.java)
+            startActivity(intent)
 
-                newItemData.setValue(todoItemData)
-
-                dialog.dismiss()
-                Toast.makeText(this, "item saved", Toast.LENGTH_LONG).show()
-            }
-            alertDialog.show()
         }
 
         toDOList= mutableListOf<ToDoModel>()
@@ -79,6 +85,9 @@ class MainActivity : AppCompatActivity() ,UpdateAndDelete{
                 toDoItemData.UID = currentItem.key
                 toDoItemData.done = map.get("done") as Boolean?
                 toDoItemData.itemDataText = map.get("itemDataText") as String?
+                toDoItemData.dateDb = map.get("dateDb") as String?
+                toDoItemData.timeDb = map.get("timeDb") as String?
+                toDoItemData.colorDb = map.get("colorDb") as String?
                 toDOList!!.add(toDoItemData)
             }
         }
